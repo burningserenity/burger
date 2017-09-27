@@ -5,21 +5,23 @@ var burger = {
 
     // Show all burgers in database
     selectAll: function(cb) {
-        orm.selectAll("burgers", function(result) {
+        orm.selectAll(function(result) {
             cb(result);
         });
     },
 
     // Insert a burger into the table
-    insertOne: function(cb) {
-        orm.insertOne("burgers", "burger_name", valOfCol, function(result) {
+    insertOne: function(burger_name, cb) {
+        console.log("it is: " + burger_name);
+        orm.insertOne(burger_name, function(result) {
             cb(result);
         });
     },
 
     // Update a burger
-    updateOne: function(cb) {
-        orm.updateOne("burgers", updatedCol, valOfUpdate, colToSearch, valOfSearch, function(result) {
+    updateOne: function(burger_id, cb) {
+        console.log("burger_id = " + burger_id);
+        orm.updateOne(burger_id, function(result) {
             cb(result);
         });
     },

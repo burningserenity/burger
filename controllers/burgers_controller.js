@@ -14,35 +14,21 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-    burger.insertOne([
-        "burgers"
-    ], [
-        "burger_name"
-    ], [
-        req.body.name
-    ], function() {
+    burger.insertOne(
+       req.body.name,
+     function() {
         res.redirect("/");
     });
 });
 
 router.put("/:id", function(req, res) {
+    console.log("the put is: " + req.body.devour);
     var condition = "id = " + req.params.id;
 
     console.log("condition", condition);
 
-    burger.updateOne([
-        "burgers"
-    ], [
-        req.body.name
-    ], [
-        req.body.column
-    ], [
-        req.body.newValue
-    ], [
-        req.body.parameter
-    ], [
-        req.body.setValue
-    ], function() {
+    burger.updateOne(
+        req.params.id, function() {
         res.redirect("/");
     });
 });
