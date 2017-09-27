@@ -6,17 +6,10 @@ var orm = {
     selectAll: function(tableInput, cb) {
         var queryString = "SELECT * FROM ??";
         connection.query(queryString, [tableInput], function(err, sql) {
+            if (err) throw err;
             console.log(sql);
+            cb(sql);
         });
-        cb(sql);
-    },
-
-    selectWhere: function(tableInput, colToSearch, valOfCol, cb) {
-        var queryString = "SELECT * FROM ?? WHERE ?? = ?";
-        connection.query(queryString, [tableInput, colToSearch, valOfCol], function(err, sql) {
-            console.log(sql);
-        });
-        cb(sql);
     },
 
     insertOne: function(tableInput, col, valOfCol, cb) {
