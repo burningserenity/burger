@@ -1,30 +1,34 @@
-var orm = require("../config/orm.js");
+const Sequelize = require('sequelize');
+const connection = new Sequelize({  
+    username: "root",
+    password: null,
+    database: "burgers_db",
+    host: "localhost",
+    dialect: "mysql",
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
+});
 
-
-var burger = {
-
-    // Show all burgers in database
-    selectAll: function(cb) {
-        orm.selectAll(function(result) {
-            cb(result);
-        });
+var Burger = connection.define("Burger", {
+    burger_name : {
+        type: Sequelize.STRING,
+        allowNull: false,            
     },
-
-    // Insert a burger into the table
-    insertOne: function(burger_name, cb) {
-        console.log("it is: " + burger_name);
-        orm.insertOne(burger_name, function(result) {
-            cb(result);
-        });
+    devoured : {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     },
+    date : {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.NOW
+    }
+}, {
+    timestamps: false
+});
 
-    // Update a burger
-    updateOne: function(burger_id, cb) {
-        console.log("burger_id = " + burger_id);
-        orm.updateOne(burger_id, function(result) {
-            cb(result);
-        });
-    },
-}
-    
-module.exports = burger;
+Burger.sync();
+
+module.exports = Burger;
